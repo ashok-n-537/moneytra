@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexus Bank — Next-Gen Digital Banking</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <!-- FontAwesome Icons CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Canvas Confetti CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+</head>
+
+<body>
+
+  <!-- Ambient Dynamic Blob Background -->
+  <div class="ambient-background">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <div class="app-container">
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-logo">
+          <i class="fa-solid fa-layer-group"></i>
+        </div>
+        <div class="brand-text">
+          <h1>Nexus</h1>
+          <span>Banking</span>
+        </div>
+      </div>
+
+      <ul class="nav-menu">
+        <li class="nav-item active" data-tab="dashboard">
+          <a href="#dashboard"><i class="fa-solid fa-chart-pie"></i> Overview</a>
+        </li>
+        <li class="nav-item" data-tab="accounts">
+          <a href="#accounts"><i class="fa-solid fa-wallet"></i> Accounts</a>
+        </li>
+        <li class="nav-item" data-tab="transfers">
+          <a href="#transfers"><i class="fa-solid fa-paper-plane"></i> Transfers</a>
+        </li>
+        <li class="nav-item" data-tab="cards">
+          <a href="#cards"><i class="fa-regular fa-credit-card"></i> My Cards</a>
+        </li>
+        <li class="nav-item" data-tab="analytics">
+          <a href="#analytics"><i class="fa-solid fa-chart-line"></i> Analytics</a>
+        </li>
+        <li class="nav-item" data-tab="savings">
+          <a href="#savings"><i class="fa-solid fa-piggy-bank"></i> Vaults <span class="nav-badge"></span></a>
+        </li>
+        <li class="nav-item" data-tab="bills">
+          <a href="#bills"><i class="fa-solid fa-receipt"></i> Bills</a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="user-compact">
+          <div class="avatar-wrapper">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80"
+              alt="Avatar" class="avatar" id="sidebarAvatar">
+            <span class="status-dot"></span>
+          </div>
+          <div class="user-info">
+            <h4 id="sidebarUserName">Ashok</h4>
+            <p id="sidebarUserTier">Nexus Platinum</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Layout -->
+    <main class="main-wrapper">
+
+      <!-- Top Header Navbar -->
+      <header class="top-header">
+        <div class="header-left">
+          <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle Menu">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="globalSearchInput" placeholder="Search transactions, cards, payees...">
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <!-- Balance Privacy Toggle -->
+          <button class="action-btn privacy-btn" id="privacyToggleBtn" title="Toggle Balance Visibility">
+            <i class="fa-solid fa-eye" id="privacyIcon"></i>
+          </button>
+
+          <!-- Light / Dark Theme Switcher -->
+          <button class="action-btn" id="themeToggleBtn" title="Toggle Theme">
+            <i class="fa-solid fa-moon" id="themeIcon"></i>
+          </button>
+
+          <!-- Notification Bell -->
+          <button class="action-btn" id="notificationsBtn" title="Notifications">
+            <i class="fa-regular fa-bell"></i>
+            <span class="action-badge"></span>
+          </button>
+
+          <!-- Quick Send CTA -->
+          <button class="btn-primary" id="openSendMoneyModalBtn">
+            <i class="fa-solid fa-arrow-up-right-from-square"></i> Send Money
+          </button>
+        </div>
+      </header>
+
+      <!-- Dashboard View Content -->
+      <div class="dashboard-content">
+
+        <!-- Welcome Banner -->
+        <section class="welcome-banner">
+          <div class="banner-text">
+            <h2 id="greetingText">Welcome back, Alexander! 👋</h2>
+            <p>Here's a summary of your financial portfolio today.</p>
+          </div>
+          <div class="date-pill">
+            <i class="fa-regular fa-calendar"></i>
+            <span id="currentDateDisplay">Sunday, 13 Sep 2026</span>
+          </div>
+        </section>
+
+        <!-- Accounts Overview Grid -->
+        <section class="accounts-grid" id="accountsGrid">
+          <!-- Populated dynamically via app.js -->
+        </section>
+
+        <!-- Middle Grid: Cards & Quick Transfer -->
+        <section class="middle-grid">
+
+          <!-- Card Management -->
+          <div class="card-section">
+            <div class="section-header">
+              <h3><i class="fa-regular fa-credit-card"></i> Cards Management</h3>
+              <div class="quick-chip-group">
+                <button class="chip-btn active" id="cardSelectBlack">Obsidian</button>
+                <button class="chip-btn" id="cardSelectSapphire">Sapphire</button>
+              </div>
+            </div>
+
+            <!-- 3D Flippable Credit Card -->
+            <div class="card-perspective">
+              <div class="credit-card-3d" id="creditCard3D">
+                <!-- Front Face -->
+                <div class="card-face card-face-front">
+                  <div class="card-chip-row">
+                    <div class="chip-img"></div>
+                    <span class="brand-icon" id="cardBrandText">VISA</span>
+                  </div>
+                  <div class="card-number-display" id="cardNumberDisplay" title="Click to Flip / Copy">
+                    <span>4921</span> <span>8834</span> <span>9102</span> <span>4892</span>
+                  </div>
+                  <div class="card-details-row">
+                    <div class="card-holder-name">
+                      <p>CARD HOLDER</p>
+                      <h5 id="cardHolderText">ALEXANDER VANCE</h5>
+                    </div>
+                    <div class="card-expiry">
+                      <p>EXPIRES</p>
+                      <h5 id="cardExpiryText">08/28</h5>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Back Face -->
+                <div class="card-face card-face-back">
+                  <div class="card-magnetic-strip"></div>
+                  <div class="card-cvv-box">
+                    <span id="cardCvvText">749</span>
+                  </div>
+                  <p>Click card anywhere to flip back to front view.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Controls -->
+            <div class="card-controls">
+              <div class="control-item">
+                <i class="fa-solid fa-snowflake" style="color: var(--accent-cyan);"></i>
+                <span>Freeze Card</span>
+                <label class="switch">
+                  <input type="checkbox" id="freezeCardToggle">
+                  <span class="slider"></span>
+                </label>
+              </div>
+
+              <button class="chip-btn" id="copyCardNoBtn">
+                <i class="fa-regular fa-copy"></i> Copy Number
+              </button>
+            </div>
+          </div>
+
+          <!-- Quick Transfer Widget -->
+          <div class="transfer-section">
+            <div class="section-header">
+              <h3><i class="fa-solid fa-bolt"></i> Quick Send</h3>
+              <span style="font-size: 12px; color: var(--text-tertiary);">Instant 0% Fee</span>
+            </div>
+
+            <!-- Contact Carousel -->
+            <div class="contacts-row" id="contactsCarousel">
+              <!-- Rendered via JS -->
+            </div>
+
+            <!-- Transfer Input Form -->
+            <form class="transfer-form" id="quickTransferForm">
+              <div class="form-group">
+                <label>Amount (USD)</label>
+                <div class="amount-input-wrapper">
+                  <span class="currency-symbol">$</span>
+                  <input type="number" id="quickAmountInput" placeholder="0.00" min="1" step="any" required>
+                </div>
+              </div>
+
+              <div class="quick-chip-group">
+                <button type="button" class="chip-btn quick-amt" data-val="50">$50</button>
+                <button type="button" class="chip-btn quick-amt" data-val="100">$100</button>
+                <button type="button" class="chip-btn quick-amt" data-val="250">$250</button>
+                <button type="button" class="chip-btn quick-amt" data-val="500">$500</button>
+              </div>
+
+              <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 8px;">
+                <i class="fa-solid fa-paper-plane"></i> Send Instant Funds
+              </button>
+            </form>
+          </div>
+
+        </section>
+
+        <!-- Charts Grid: Spending & Income -->
+        <section class="charts-grid">
+          <div class="chart-card">
+            <div class="section-header">
+              <h3><i class="fa-solid fa-chart-simple"></i> Cash Flow Analytics</h3>
+              <span style="font-size: 12px; color: var(--text-secondary);">Last 6 Months</span>
+            </div>
+            <div class="chart-container">
+              <canvas id="cashflowChart"></canvas>
+            </div>
+          </div>
+
+          <div class="chart-card">
+            <div class="section-header">
+              <h3><i class="fa-solid fa-chart-pie"></i> Spending Categories</h3>
+            </div>
+            <div class="chart-container">
+              <canvas id="categoryDoughnutChart"></canvas>
+            </div>
+          </div>
+        </section>
+
+        <!-- Recent Transactions Section -->
+        <section class="transactions-section">
+          <div class="section-header">
+            <h3><i class="fa-solid fa-list-ul"></i> Transaction History</h3>
+            <span style="font-size: 12px; color: var(--text-tertiary);" id="txCountBadge">9 transactions</span>
+          </div>
+
+          <div class="table-filter-bar">
+            <div class="category-filter-pills" id="categoryFilters">
+              <button class="filter-pill active" data-cat="all">All Categories</button>
+              <button class="filter-pill" data-cat="Shopping">Shopping</button>
+              <button class="filter-pill" data-cat="Food & Dining">Food & Dining</button>
+              <button class="filter-pill" data-cat="Bills & Utilities">Bills</button>
+              <button class="filter-pill" data-cat="Income">Income</button>
+              <button class="filter-pill" data-cat="Investment">Investment</button>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="transactions-table">
+              <thead>
+                <tr>
+                  <th>Vendor & Description</th>
+                  <th>Category</th>
+                  <th>Date & Time</th>
+                  <th>Account</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="transactionsTableBody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Savings Goals Section -->
+        <section class="transactions-section">
+          <div class="section-header">
+            <h3><i class="fa-solid fa-vault"></i> Savings Goals & Vaults</h3>
+            <button class="chip-btn" id="addGoalBtn"><i class="fa-solid fa-plus"></i> New Vault</button>
+          </div>
+
+          <div class="vaults-grid" id="vaultsGrid">
+            <!-- Dynamically populated -->
+          </div>
+        </section>
+
+        <!-- Bills & Subscriptions Section -->
+        <section class="transactions-section">
+          <div class="section-header">
+            <h3><i class="fa-solid fa-receipt"></i> Upcoming Bills & Subscriptions</h3>
+          </div>
+
+          <div class="vaults-grid" id="billsGrid">
+            <!-- Dynamically populated -->
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Send Money Modal -->
+  <div class="modal-overlay" id="transferModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-paper-plane"></i> Send Money</h3>
+        <button class="modal-close" id="closeTransferModal">&times;</button>
+      </div>
+      <form id="modalTransferForm">
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label>Recipient Name or Account No.</label>
+          <input type="text" id="modalRecipient" placeholder="e.g. Sarah Jenkins or NX-8812-401"
+            class="search-box input"
+            style="width: 100%; padding: 12px; border-radius: var(--radius-md); background: var(--bg-input); color: var(--text-primary); border: 1px solid var(--border-glass);"
+            required>
+        </div>
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label>Amount (USD)</label>
+          <div class="amount-input-wrapper">
+            <span class="currency-symbol">$</span>
+            <input type="number" id="modalAmount" placeholder="0.00" min="1" step="any" required>
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom: 20px;">
+          <label>Note / Description (Optional)</label>
+          <input type="text" id="modalNotes" placeholder="e.g. Dinner share, Rent split"
+            style="width: 100%; padding: 12px; border-radius: var(--radius-md); background: var(--bg-input); color: var(--text-primary); border: 1px solid var(--border-glass);">
+        </div>
+        <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;">Confirm
+          Transfer</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Deposit Goal Modal -->
+  <div class="modal-overlay" id="depositModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3><i class="fa-solid fa-piggy-bank"></i> Deposit to Savings Vault</h3>
+        <button class="modal-close" id="closeDepositModal">&times;</button>
+      </div>
+      <form id="modalDepositForm">
+        <input type="hidden" id="depositGoalId">
+        <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;" id="depositGoalName">Goal: </p>
+        <div class="form-group" style="margin-bottom: 20px;">
+          <label>Deposit Amount (USD)</label>
+          <div class="amount-input-wrapper">
+            <span class="currency-symbol">$</span>
+            <input type="number" id="depositAmount" placeholder="0.00" min="1" step="any" required>
+          </div>
+        </div>
+        <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;">Add Funds to
+          Vault</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Receipt Confirmation Modal -->
+  <div class="modal-overlay" id="receiptModal">
+    <div class="modal-box" style="text-align: center;">
+      <div
+        style="width: 60px; height: 60px; background: rgba(16, 185, 129, 0.2); color: var(--accent-emerald); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 16px auto;">
+        <i class="fa-solid fa-check"></i>
+      </div>
+      <h3 style="font-size: 20px; font-weight: 800; margin-bottom: 6px;">Transfer Successful!</h3>
+      <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 20px;">Transaction reference #<span
+          id="receiptTxId">NX-99812</span></p>
+
+      <div
+        style="background: var(--bg-input); padding: 16px; border-radius: var(--radius-md); text-align: left; margin-bottom: 24px; display: flex; flex-direction: column; gap: 8px; font-size: 13px;">
+        <div style="display: flex; justify-content: space-between;"><span
+            style="color: var(--text-tertiary);">Recipient:</span> <strong id="receiptRecipient">Sarah Jenkins</strong>
+        </div>
+        <div style="display: flex; justify-content: space-between;"><span
+            style="color: var(--text-tertiary);">Amount:</span> <strong id="receiptAmount"
+            style="color: var(--accent-emerald); font-family: var(--font-mono);">$350.00</strong></div>
+        <div style="display: flex; justify-content: space-between;"><span style="color: var(--text-tertiary);">Date &
+            Time:</span> <span id="receiptDate">13 Sep 2026</span></div>
+      </div>
+
+      <button class="btn-primary" id="closeReceiptBtn" style="width: 100%; justify-content: center;">Done</button>
+    </div>
+  </div>
+
+  <!-- Toast Notification System -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Application Logic -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
